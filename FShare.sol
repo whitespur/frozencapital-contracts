@@ -41,15 +41,6 @@ contract FShare is ERC20Burnable, Operator {
     constructor(uint256 _startTime, address _communityFund, address _devFund) public ERC20("FSHARE", "FSHARE") {
         _mint(msg.sender, 1 ether); // mint 1 FROST Share for initial pools deployment
 
-        startTime = _startTime;
-        endTime = startTime + VESTING_DURATION;
-
-        communityFundLastClaimed = startTime;
-        devFundLastClaimed = startTime;
-
-        communityFundRewardRate = COMMUNITY_FUND_POOL_ALLOCATION.div(VESTING_DURATION);
-        devFundRewardRate = DEV_FUND_POOL_ALLOCATION.div(VESTING_DURATION);
-
         require(_devFund != address(0), "Address cannot be 0");
         devFund = _devFund;
 
@@ -69,17 +60,11 @@ contract FShare is ERC20Burnable, Operator {
     }
 
     function unclaimedTreasuryFund() public view returns (uint256 _pending) {
-        uint256 _now = block.timestamp;
-        if (_now > endTime) _now = endTime;
-        if (communityFundLastClaimed >= _now) return 0;
-        _pending = _now.sub(communityFundLastClaimed).mul(communityFundRewardRate);
+        return 0;
     }
 
     function unclaimedDevFund() public view returns (uint256 _pending) {
-        uint256 _now = block.timestamp;
-        if (_now > endTime) _now = endTime;
-        if (devFundLastClaimed >= _now) return 0;
-        _pending = _now.sub(devFundLastClaimed).mul(devFundRewardRate);
+        return 0;
     }
 
     /**
@@ -106,6 +91,7 @@ contract FShare is ERC20Burnable, Operator {
         require(_farmingIncentiveFund != address(0), "!_farmingIncentiveFund");
         rewardPoolDistributed = true;
         _mint(_farmingIncentiveFund, FARMING_POOL_REWARD_ALLOCATION);
+        _mint(devFund, DEV_FUND_POOL_ALLOCATION);
     }
 
     function burn(uint256 amount) public override {
