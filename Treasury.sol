@@ -44,11 +44,10 @@ contract Treasury is ContractGuard {
     uint256 public epoch = 0;
     uint256 public epochSupplyContractionLeft = 0;
 
-    // Concrete addresses will be here after those two pools are deployed
     // exclusions from total supply
         address[] public excludedFromTotalSupply = [
-            address(), // FrostGenesisPool
-            address() // FrostRewardPool
+            address(0x14E29AC5CB859BeC03D78C12F7FB6Da828b2A250), // FrostGenesisPool
+            address(0x88F258515aD026FD039fAAa186EED75c9e3B8C27) // FrostRewardPool
         ];
 
     // core components
