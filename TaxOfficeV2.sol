@@ -20,8 +20,8 @@ contract TaxOfficeV2 is Operator {
     using SafeMath for uint256;
 
     // frost address will be here after deployment
-    address public frost = address();
-    address public wavax = address(0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7);
+    address public frost = address(0x320aDa89DbFA3A154613D2731c9BC3a4030DbA19);
+    address public wavax = address(0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7);
     address public uniRouter = address(0x60aE616a2155Ee3d9A68541Ba4544862310933d4);
 
     mapping(address => bool) public taxExclusionEnabled;
